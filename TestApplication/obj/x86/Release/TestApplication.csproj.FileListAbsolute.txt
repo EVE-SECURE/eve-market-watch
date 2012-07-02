@@ -1,0 +1,14 @@
+E:\Users\zanthra\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Release\TestApplication.exe
+E:\Users\zanthra\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Release\TestApplication.pdb
+E:\Users\zanthra\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Release\EveMarketWatch.exe
+E:\Users\zanthra\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Release\EveMarketWatch.pdb
+E:\Users\zanthra\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Release\ResolveAssemblyReference.cache
+E:\Users\zanthra\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Release\TestApplication.exe
+E:\Users\zanthra\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Release\TestApplication.pdb
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Release\TestApplication.exe
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Release\TestApplication.pdb
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Release\EveMarketWatch.exe
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Release\EveMarketWatch.pdb
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Release\ResolveAssemblyReference.cache
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Release\TestApplication.exe
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Release\TestApplication.pdb

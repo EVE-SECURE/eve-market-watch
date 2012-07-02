@@ -1,0 +1,36 @@
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\bin\Debug\EveMarketWatch.exe.config
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\bin\Debug\EveMarketWatch.exe
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\bin\Debug\EveMarketWatch.pdb
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\CharacterTemplate.baml
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\CharacterTemplate.g.cs
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\MainWindow.g.cs
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\App.g.cs
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\EveMarketWatch_MarkupCompile.cache
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\EveMarketWatch_MarkupCompile.lref
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\MainWindow.baml
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\EveMarketWatch.g.resources
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\com.zanthra.emw.Properties.Resources.resources
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\GenerateResource.read.1.tlog
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\GenerateResource.write.1.tlog
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\EveMarketWatch.exe
+Z:\Programming\C#\EveMarketWatch\EveMarketWatch\obj\x86\Debug\EveMarketWatch.pdb
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\bin\Debug\EveMarketWatch.exe.config
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\EveMarketWatch.exe
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\EveMarketWatch.pdb
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\bin\Debug\EveMarketWatch.exe
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\bin\Debug\EveMarketWatch.pdb
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\ResolveAssemblyReference.cache
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\CharacterTemplate.baml
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\CharacterTemplate.g.cs
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\MainWindow.g.cs
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\App.g.cs
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\EveMarketWatch_MarkupCompile.cache
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\EveMarketWatch_MarkupCompile.lref
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\MainWindow.baml
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\EveMarketWatch.g.resources
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\com.zanthra.emw.Properties.Resources.resources
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\GenerateResource.read.1.tlog
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\EveMarketWatch\obj\x86\Debug\GenerateResource.write.1.tlog
