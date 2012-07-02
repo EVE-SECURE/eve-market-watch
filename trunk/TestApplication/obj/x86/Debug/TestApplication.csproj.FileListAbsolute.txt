@@ -1,0 +1,35 @@
+E:\Users\zanthra\documents\visual studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\Users\zanthra\documents\visual studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\TestApplication.exe
+E:\Users\zanthra\documents\visual studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\TestApplication.pdb
+E:\Users\zanthra\documents\visual studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\EveMarketWatch.exe
+E:\Users\zanthra\documents\visual studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\EveMarketWatch.pdb
+E:\Users\zanthra\documents\visual studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Debug\TestApplication.exe
+E:\Users\zanthra\documents\visual studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Debug\TestApplication.pdb
+C:\Users\zanthra\Documents\OldHome\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\TestApplication.exe
+C:\Users\zanthra\Documents\OldHome\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\TestApplication.pdb
+C:\Users\zanthra\Documents\OldHome\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\EveMarketWatch.exe
+C:\Users\zanthra\Documents\OldHome\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\EveMarketWatch.pdb
+C:\Users\zanthra\Documents\OldHome\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\zanthra\Documents\OldHome\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Debug\TestApplication.exe
+C:\Users\zanthra\Documents\OldHome\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Debug\TestApplication.pdb
+\\CINNABAR\zanthra\Programming\C#\EveMarketWatch\TestApplication\bin\Debug\TestApplication.exe
+\\CINNABAR\zanthra\Programming\C#\EveMarketWatch\TestApplication\bin\Debug\TestApplication.pdb
+\\CINNABAR\zanthra\Programming\C#\EveMarketWatch\TestApplication\bin\Debug\EveMarketWatch.exe
+\\CINNABAR\zanthra\Programming\C#\EveMarketWatch\TestApplication\bin\Debug\EveMarketWatch.pdb
+\\CINNABAR\zanthra\Programming\C#\EveMarketWatch\TestApplication\obj\x86\Debug\ResolveAssemblyReference.cache
+\\CINNABAR\zanthra\Programming\C#\EveMarketWatch\TestApplication\obj\x86\Debug\TestApplication.exe
+\\CINNABAR\zanthra\Programming\C#\EveMarketWatch\TestApplication\obj\x86\Debug\TestApplication.pdb
+Z:\Programming\C#\EveMarketWatch\TestApplication\bin\Debug\TestApplication.exe
+Z:\Programming\C#\EveMarketWatch\TestApplication\bin\Debug\TestApplication.pdb
+Z:\Programming\C#\EveMarketWatch\TestApplication\bin\Debug\EveMarketWatch.exe
+Z:\Programming\C#\EveMarketWatch\TestApplication\bin\Debug\EveMarketWatch.pdb
+Z:\Programming\C#\EveMarketWatch\TestApplication\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Programming\C#\EveMarketWatch\TestApplication\obj\x86\Debug\TestApplication.exe
+Z:\Programming\C#\EveMarketWatch\TestApplication\obj\x86\Debug\TestApplication.pdb
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\TestApplication.exe
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\TestApplication.pdb
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\EveMarketWatch.exe
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\bin\Debug\EveMarketWatch.pdb
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Debug\ResolveAssemblyReference.cache
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Debug\TestApplication.exe
+G:\Users\scottw\Documents\Visual Studio 2010\Projects\EveMarketWatch\TestApplication\obj\x86\Debug\TestApplication.pdb
