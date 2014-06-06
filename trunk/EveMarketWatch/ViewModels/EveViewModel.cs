@@ -678,7 +678,6 @@ namespace com.zanthra.emw.ViewModels
             }
 
             calculateItems();
-            UpdatePrices();
         }
         
         /// <summary>
@@ -693,6 +692,7 @@ namespace com.zanthra.emw.ViewModels
                 t.PropertyChanged += new PropertyChangedEventHandler(Transaction_PropertyChanged);
                 _transactions.Add(t);
             }
+            calculateItems();
         }
 
         #endregion
