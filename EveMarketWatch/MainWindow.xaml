@@ -3,12 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:com.zanthra.emw.ViewModels"
         xmlns:local="clr-namespace:com.zanthra.emw"
-        Title="EVE Marketwatch v0.61" Height="662" Width="810" Closed="Window_Closed" Loaded="Window_Loaded">
+        Title="EVE Marketwatch v0.70" Height="662" Width="1036" Closed="Window_Closed" Loaded="Window_Loaded">
     <Window.DataContext>
         <vm:EveViewModel />
     </Window.DataContext>
     <Grid>
-        <ListBox Height="84" Width="204" Margin="506,12,0,0" Name="listBox1" VerticalAlignment="Top" ItemsSource="{Binding Path=Characters}" HorizontalAlignment="Left" SelectionChanged="listBox1_SelectionChanged">
+        <Menu IsMainMenu="True" Width="auto" Height="20" Margin="0,0,0,0" VerticalAlignment="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Autosave Location" Name="miAutoSave" Click="miAutoSave_Click" />
+                <MenuItem Header="Save to Isolated Storage" Name="miIsolated" IsCheckable="True" IsEnabled="{Binding Path=!UseIsolatedStorage}" IsChecked="{Binding Path=UseIsolatedStorage}">
+                    
+                </MenuItem>
+                <MenuItem Header="_Save" Name="miSave" Click="miSave_Click" />
+                <MenuItem Header="Save As" Name="miSaveAs" Click="miSaveAs_Click" />
+                <Separator />
+                <MenuItem Header="_Exit" Name="miExit" Click="miExit_Click" />
+            </MenuItem>
+        </Menu>
+        <ListBox Height="96" Width="284" Margin="506,25,0,0" Name="listBox1" VerticalAlignment="Top" ItemsSource="{Binding Path=Characters}" HorizontalAlignment="Left" SelectionChanged="listBox1_SelectionChanged">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>
@@ -20,11 +32,11 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBox Text="{Binding Path=UserID}"  Height="21" HorizontalAlignment="Left" Margin="12,12,0,0" Name="userID" VerticalAlignment="Top" Width="60" />
-        <TextBox Text="{Binding Path=ApiKey}"  Height="21" HorizontalAlignment="Left" Margin="78,12,0,0" Name="apiKey" VerticalAlignment="Top" Width="295" />
-        <Button Content="Load Characters" Height="22" HorizontalAlignment="Left" Margin="379,12,0,0" Name="button1" VerticalAlignment="Top" Width="122" Click="btnLoadCharacters_Click" />
-        <Button Content="Load Transactions" Height="23" HorizontalAlignment="Left" Margin="379,41,0,0" Name="button3" VerticalAlignment="Top" Width="122" Click="btnLoadTransactions_Click" />
-        <TabControl Margin="12,78,12,63" Name="tabControl1">
+        <TextBox Text="{Binding Path=UserID}"  Height="21" HorizontalAlignment="Left" Margin="12,30,0,0" Name="userID" VerticalAlignment="Top" Width="60" />
+        <TextBox Text="{Binding Path=ApiKey}"  Height="21" HorizontalAlignment="Left" Margin="78,30,0,0" Name="apiKey" VerticalAlignment="Top" Width="295" />
+        <Button Content="Load Characters" Height="22" HorizontalAlignment="Left" Margin="379,30,0,0" Name="button1" VerticalAlignment="Top" Width="122" Click="btnLoadCharacters_Click" />
+        <Button Content="Load Transactions" Height="23" HorizontalAlignment="Left" Margin="379,59,0,0" Name="button3" VerticalAlignment="Top" Width="122" Click="btnLoadTransactions_Click" />
+        <TabControl Margin="12,111,12,63" Name="tabControl1">
             <TabItem Header="Transactions" Name="transactionTab">
                 <Grid>
                     <ListView Name="lstTransactions" ItemsSource="{Binding Path=Transactions}" HorizontalContentAlignment="Left" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" Margin="0,0,0,-1" Height="450">
@@ -106,10 +118,10 @@
         <StatusBar Name="textBlock1" Height="29" VerticalAlignment="Bottom">
             <TextBlock Text="{Binding Path=StatusString}"/>
         </StatusBar>
-        <Button Content="Export Transactions" Height="23" HorizontalAlignment="Left" Margin="121,41,0,0" Name="btnExport" VerticalAlignment="Top" Width="122" Click="btnExport_Click" />
-        <Button Content="Import Transasctions" Height="23" HorizontalAlignment="Left" Margin="249,41,0,0" Name="btnImport" VerticalAlignment="Top" Width="124" Click="btnImport_Click" />
-        <Button Content="Export Items" Height="23" HorizontalAlignment="Left" Margin="12,41,0,0" Name="btnExportItmes" VerticalAlignment="Top" Width="103" Click="btnExportItems_Click" />
-        <Button Content="Clear Transactions" Height="23" HorizontalAlignment="Left" Margin="379,70,0,0" Name="btnClear" VerticalAlignment="Top" Width="122" Click="btnClear_Click" />
+        <Button Content="Export Transactions" Height="23" HorizontalAlignment="Left" Margin="121,59,0,0" Name="btnExport" VerticalAlignment="Top" Width="122" Click="btnExport_Click" />
+        <Button Content="Import Transasctions" Height="23" HorizontalAlignment="Left" Margin="249,59,0,0" Name="btnImport" VerticalAlignment="Top" Width="124" Click="btnImport_Click" />
+        <Button Content="Export Items" Height="23" HorizontalAlignment="Left" Margin="12,59,0,0" Name="btnExportItmes" VerticalAlignment="Top" Width="103" Click="btnExportItems_Click" />
+        <Button Content="Clear Transactions" Height="23" HorizontalAlignment="Left" Margin="379,88,0,0" Name="btnClear" VerticalAlignment="Top" Width="122" Click="btnClear_Click" />
         <TextBox Text="{Binding Path=BrokerFee}" HorizontalAlignment="Left" Margin="100,0,0,35" Name="txtBrokerFee" Width="93" Height="22" VerticalAlignment="Bottom" />
         <TextBox Text="{Binding Path=TransactionTax}" Margin="352,0,0,35" Name="txtTransactionTax" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="91" />
         <Label Content="Broker's Fee" Height="24" HorizontalAlignment="Left" Margin="12,0,0,35" Name="label1" VerticalAlignment="Bottom" Width="82" />
@@ -117,5 +129,6 @@
         <Button Content="Update" Height="22" HorizontalAlignment="Left" Margin="467,0,0,35" Name="btnUpdatePrices" VerticalAlignment="Bottom" Width="88" Click="btnUpdatePrices_Click" />
         <Label Content="EVE Market Watch, written by Zanthra Shard" Height="26
                " Name="label3" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="240" />
+
     </Grid>
 </Window>

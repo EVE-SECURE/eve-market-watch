@@ -19,7 +19,13 @@ namespace com.zanthra.emw.ViewModels
 {
     class EveViewModel : INotifyPropertyChanged
     {
-        
+        /// <summary>
+        /// This is a version identifier for the settings file so that the correct code
+        /// to load it can be used.
+        /// </summary>
+        private String ISOLATED_STORAGE_SETTINGS_FILE_VERSION = "EMW Isolated Storage Settings Version 1";
+
+
         public EveViewModel()
         {
             loadCharacters.DoWork += _loadCharactersWorker;
@@ -64,7 +70,7 @@ namespace com.zanthra.emw.ViewModels
         /// <summary>
         /// The API UserID in the text box.
         /// </summary>
-        private string _userID;
+        private string _userID = "ID";
         public string UserID
         {
             get { return _userID; }
@@ -78,7 +84,7 @@ namespace com.zanthra.emw.ViewModels
         /// <summary>
         /// The API Key in the text box.
         /// </summary>
-        private string _apiKey;
+        private string _apiKey = "VCode";
         public string ApiKey
         {
             get { return _apiKey; }
@@ -126,6 +132,31 @@ namespace com.zanthra.emw.ViewModels
             set { _transactionTax = value; NotifyPropertyChanged("TransactionTax"); }
         }
 
+        /// <summary>
+        /// This is the file path that the program will use to save the file when
+        /// the program is closed.
+        /// </summary>
+        private string _transactionFilePath = "#isolatedStorage";
+        public string TransactionFilePath
+        {
+            get { return _transactionFilePath; }
+            set {
+                _transactionFilePath = value;
+                NotifyPropertyChanged("TransactionFilePath");
+                NotifyPropertyChanged("UseIsolatedStorage");
+            }
+        }
+
+        /// <summary>
+        /// This is a boolean identifying whether the data is being saved to
+        /// Isolated Storage or nor.
+        /// </summary>
+        public bool UseIsolatedStorage
+        {
+            get { return TransactionFilePath == "#isolatedStorage"; }
+            set { TransactionFilePath = "#isolatedStorage"; }
+        }
+
         #endregion
 
         #region Load Characters
@@ -151,32 +182,38 @@ namespace com.zanthra.emw.ViewModels
         /// <param name="e"></param>
         public void _loadCharactersWorker(object sender, DoWorkEventArgs e)
         {
-            //Create a new temporary list.
-            List<Character> newCharacters = new List<Character>();
-
-            UpdateStatus("Loading Characters from API");
-            //Get our XML root element from the EVE API.
-            XElement root = XElement.Load(CHARACTER_LIST_URL + String.Format("?keyID={0}&vCode={1}", _userID, _apiKey));
-
-            UpdateStatus("Processing Character List");
-            //Throw an exception if the EVE API sends an error.
-            if (root.Element("error") != null) throw new EveApiAccessException(root.Element("error"));
-
-            //Otherwise, just create new characters from each result.
-            foreach (XElement el in root.Element("result").Element("rowset").Elements())
+            try
             {
-                Character toAdd = new Character
+                //Create a new temporary list.
+                List<Character> newCharacters = new List<Character>();
+
+                UpdateStatus("Loading Characters from API");
+                //Get our XML root element from the EVE API.
+                XElement root = XElement.Load(CHARACTER_LIST_URL + String.Format("?keyID={0}&vCode={1}", _userID, _apiKey));
+
+                UpdateStatus("Processing Character List");
+                //Throw an exception if the EVE API sends an error.
+                if (root.Element("error") != null) throw new EveApiAccessException(root.Element("error"));
+
+                //Otherwise, just create new characters from each result.
+                foreach (XElement el in root.Element("result").Element("rowset").Elements())
                 {
-                    characterID = Int64.Parse(el.Attribute("characterID").Value),
-                    name = el.Attribute("name").Value,
-                    corporationID = Int64.Parse(el.Attribute("corporationID").Value),
-                    corporationName = el.Attribute("corporationName").Value
-                };
+                    Character toAdd = new Character
+                    {
+                        characterID = Int64.Parse(el.Attribute("characterID").Value),
+                        name = el.Attribute("name").Value,
+                        corporationID = Int64.Parse(el.Attribute("corporationID").Value),
+                        corporationName = el.Attribute("corporationName").Value
+                    };
 
-                newCharacters.Add(toAdd);
+                    newCharacters.Add(toAdd);
+                }
+
+                e.Result = newCharacters;
+            }catch (Exception ex)
+            {
+                UpdateStatus(String.Format("Error loading characters: {0}", ex.ToString()));
             }
-
-            e.Result = newCharacters;
         }
 
         /// <summary>
@@ -192,7 +229,7 @@ namespace com.zanthra.emw.ViewModels
                 UpdateStatus(String.Format("EVE API Error while retrieving Characters: {0}", ((EveApiAccessException)e.Error.GetBaseException()).ErrorCode));
             }
             //Otherwise clear the character list and update it.
-            else
+            else if (e.Result is List<Character>)
             {
                 _characters.Clear();
                 foreach (Character c in (List<Character>)e.Result)
@@ -232,55 +269,61 @@ namespace com.zanthra.emw.ViewModels
         /// <param name="eargs"></param>
         private void _loadTransactionsWorker(object sender, DoWorkEventArgs eargs)
         {
-            //Cast the character back.
-            Character character = (Character)eargs.Argument;
-
-            //Create a temporary transactions list.
-            List<Transaction> newTransactions = new List<Transaction>();
-            bool done = false;
-            long beforeTransID = -1;
-            while (!done)
+            try
             {
-                XElement root;
+                //Cast the character back.
+                Character character = (Character)eargs.Argument;
 
-                //If this is the first set of 1000, we don't but a beforeTransID in.
-                if (beforeTransID == -1)
+                //Create a temporary transactions list.
+                List<Transaction> newTransactions = new List<Transaction>();
+                bool done = false;
+                long beforeTransID = -1;
+                while (!done)
                 {
-                    UpdateStatus("Retrieving First Thousand Transactions");
-                    root = XElement.Load(TRANSACTION_LIST_URL + String.Format("?keyID={0}&vCode={1}&characterID={2}",
-                                                                              _userID, _apiKey, character.characterID));
-                }
-                //Otherwise retrieve the transactions beforeTransID.
-                else
-                {
-                    UpdateStatus(String.Format("Retrieving Transactions Before transID {0}", beforeTransID));
-                    root = XElement.Load(TRANSACTION_LIST_URL + String.Format("?keyID={0}&vCode={1}&characterID={2}&beforeTransID={3}", _userID, _apiKey, character.characterID, beforeTransID));
+                    XElement root;
+
+                    //If this is the first set of 1000, we don't but a beforeTransID in.
+                    if (beforeTransID == -1)
+                    {
+                        UpdateStatus("Retrieving First Thousand Transactions");
+                        root = XElement.Load(TRANSACTION_LIST_URL + String.Format("?keyID={0}&vCode={1}&characterID={2}",
+                                                                                  _userID, _apiKey, character.characterID));
+                    }
+                    //Otherwise retrieve the transactions beforeTransID.
+                    else
+                    {
+                        UpdateStatus(String.Format("Retrieving Transactions Before transID {0}", beforeTransID));
+                        root = XElement.Load(TRANSACTION_LIST_URL + String.Format("?keyID={0}&vCode={1}&characterID={2}&beforeTransID={3}", _userID, _apiKey, character.characterID, beforeTransID));
+                    }
+
+                    //TODO: If the number of transactions lands on 1000, it will likely trigger this error and not load the transactions.
+                    //I am unsure how the API handles beforeTransID if there are no transactions beforeTransID, and I don't have 1000 transactions to test it with.
+                    if (root.Element("error") != null)
+                    {
+                        done = true;
+                        throw new EveApiAccessException(root.Element("error"));
+                    }
+
+                    //If we have less than 1000 transactions we are done, otherwise linq query to find the minimum transID from this collection.
+                    if (root.Element("result").Element("rowset").Elements().Count() < 1000)
+                        done = true;
+                    else
+                        beforeTransID = (from e in root.Element("result").Element("rowset").Elements() select Int64.Parse(e.Attribute("transactionID").Value)).Min();
+
+                    //Add the transactions to the master transaction list.
+                    foreach (Transaction t in _parseFileForTransactions(root))
+                    {
+                        newTransactions.Add(t);
+                    }
                 }
 
-                //TODO: If the number of transactions lands on 1000, it will likely trigger this error and not load the transactions.
-                //I am unsure how the API handles beforeTransID if there are no transactions beforeTransID, and I don't have 1000 transactions to test it with.
-                if (root.Element("error") != null)
-                {
-                    done = true;
-                    throw new EveApiAccessException(root.Element("error"));
-                }
-
-                //If we have less than 1000 transactions we are done, otherwise linq query to find the minimum transID from this collection.
-                if (root.Element("result").Element("rowset").Elements().Count() < 1000)
-                    done = true;
-                else
-                    beforeTransID = (from e in root.Element("result").Element("rowset").Elements() select Int64.Parse(e.Attribute("transactionID").Value)).Min();
-
-                //Add the transactions to the master transaction list.
-                foreach (Transaction t in _parseFileForTransactions(root))
-                {
-                    newTransactions.Add(t);
-                }
+                //Finish Up.
+                eargs.Result = newTransactions;
+                UpdateStatus("Done Retrieving Transactions");
+            }catch (Exception ex)
+            {
+                UpdateStatus(String.Format("Error loading Transactions: {0}", ex.ToString()));
             }
-
-            //Finish Up.
-            eargs.Result = newTransactions;
-            UpdateStatus("Done Retrieving Transactions");
         }
 
         /// <summary>
@@ -325,7 +368,7 @@ namespace com.zanthra.emw.ViewModels
                 UpdateStatus(String.Format("EVE API Error while retrieving Transactions: {0}", ((EveApiAccessException)e.Error.GetBaseException()).ErrorCode));
             }
             //Otherwise put any new transactions into the master list.
-            else
+            else if (e.Result is List<Transaction>)
             {
                 foreach (Transaction t in (List<Transaction>)e.Result)
                 {
@@ -492,13 +535,6 @@ namespace com.zanthra.emw.ViewModels
         /// </summary>
         public void UpdatePrices()
         {
-            /*foreach (Item i in _items)
-            {
-                i.BrokerFee = BrokerFee;
-                i.TransactionTax = TransactionTax;
-            }
-
-            NotifyPropertyChanged("Items");*/
             calculateItems();
         }
 
@@ -511,68 +547,157 @@ namespace com.zanthra.emw.ViewModels
             _items.Clear();
         }
 
+        #region Startup and Shutdown
+
         /// <summary>
-        /// Export all transactions and settings to isolated storage.
+        /// Called when the program is Exited.
         /// </summary>
         public void Close()
         {
+            Save();
+        }
+
+        /// <summary>
+        /// This saves the program settings, then saves off all transactions.
+        /// </summary>
+        public void Save()
+        {
             UpdateStatus("Saving");
-            IsolatedStorageFile f = IsolatedStorageFile.GetUserStoreForAssembly();
-            using(IsolatedStorageFileStream stream = new IsolatedStorageFileStream("transactions", FileMode.Create))
+            using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream("settings", FileMode.Create))
             {
                 IFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, _transactions);
+                formatter.Serialize(stream, ISOLATED_STORAGE_SETTINGS_FILE_VERSION);
+                formatter.Serialize(stream, _transactionFilePath);
                 formatter.Serialize(stream, _userID);
                 formatter.Serialize(stream, _apiKey);
                 formatter.Serialize(stream, _transactionTax);
                 formatter.Serialize(stream, _brokerFee);
             }
+
+            if (TransactionFilePath.Equals("#isolatedStorage"))
+            {
+                SaveTransactions(new IsolatedStorageFileStream("transactions", FileMode.Create));
+            }
+            else
+            {
+                SaveTransactions(new FileStream(TransactionFilePath, FileMode.Create));
+            }
+            UpdateStatus("Done");
         }
 
         /// <summary>
-        /// Import transactions and settings from isolated storage.
+        /// This saves the transactions to the provided file stream.
+        /// </summary>
+        /// <param name="stream">The file stream to write the transactions to.</param>
+        public void SaveTransactions(FileStream stream)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, _transactions);
+        }
+
+        /// <summary>
+        /// This is called when the program opens.
+        /// 
         /// </summary>
         public void Open()
         {
-            UpdateStatus("Loading");
+            //We have to set up the system to accept the https certificate.
             allowHTTPS();
 
-            IsolatedStorageFile f = IsolatedStorageFile.GetUserStoreForAssembly();
-            using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream("transactions", FileMode.OpenOrCreate))
+            Load();
+        }
+
+        /// <summary>
+        /// This loads all the settings, then loads the transactions.
+        /// </summary>
+        public void Load()
+        {
+            using (IsolatedStorageFileStream stream = new IsolatedStorageFileStream("settings", FileMode.OpenOrCreate))
             {
                 IFormatter formatter = new BinaryFormatter();
-                foreach(Transaction t in (ObservableCollection<Transaction>)formatter.Deserialize(stream))
-                {
-                    t.PropertyChanged += new PropertyChangedEventHandler(Transaction_PropertyChanged);
-                    _transactions.Add(t);
-                }
+                
+                try
+                { 
+                    Object first = formatter.Deserialize(stream);
 
+
+                    if (first is String && first.Equals("EMW Isolated Storage Settings Version 1"))
+                    {
+                        try
+                        {
+                            TransactionFilePath = (String)formatter.Deserialize(stream);
+                        }
+                        catch (Exception)
+                        { }
+
+                        try
+                        {
+                            UserID = (String)formatter.Deserialize(stream);
+                            ApiKey = (String)formatter.Deserialize(stream);
+                        }
+                        catch (Exception)
+                        {
+                            UserID = "ID";
+                            ApiKey = "Verification Code";
+                        }
+
+                        try
+                        {
+                            TransactionTax = (Double)formatter.Deserialize(stream);
+                            BrokerFee = (Double)formatter.Deserialize(stream);
+                        }
+                        catch (Exception)
+                        {
+                            BrokerFee = .01;
+                            TransactionTax = .01;
+                        }
+                    }
+                }
+                catch(Exception)
+                { }
+            }
+
+            //First it is checked whether to save to Isolated Storage or a custom directory.
+            if (TransactionFilePath.Equals("#isolatedStorage"))
+            {
                 try
                 {
-                    UserID = (String)formatter.Deserialize(stream);
-                    ApiKey = (String)formatter.Deserialize(stream);
+                    LoadTransactions(new IsolatedStorageFileStream("transactions", FileMode.Open));
                 }
                 catch (Exception)
-                {
-                    UserID = "ID";
-                    ApiKey = "Verification Code";
-                }
-
+                { }
+            }
+            else
+            {
                 try
                 {
-                    TransactionTax = (Double)formatter.Deserialize(stream);
-                    BrokerFee = (Double)formatter.Deserialize(stream);
+                    LoadTransactions(new FileStream(TransactionFilePath, FileMode.Open));
                 }
                 catch (Exception)
-                {
-                    BrokerFee = .01;
-                    TransactionTax = .01;
-                }
+                { }
+            }
 
-                calculateItems();
-                UpdatePrices();
+            calculateItems();
+            UpdatePrices();
+        }
+        
+        /// <summary>
+        /// Loads all the transactions from the given filee stream, ignoring any duplicates.
+        /// </summary>
+        /// <param name="stream">The stream to load transactions from.</param>
+        public void LoadTransactions(FileStream stream)
+        {
+            IFormatter formatter = new BinaryFormatter();
+            foreach (Transaction t in ((ObservableCollection<Transaction>) formatter.Deserialize(stream)).Except(_transactions))
+            {
+                t.PropertyChanged += new PropertyChangedEventHandler(Transaction_PropertyChanged);
+                _transactions.Add(t);
             }
         }
+
+        #endregion
+
+
 
         /// <summary>
         /// Updates the status string.

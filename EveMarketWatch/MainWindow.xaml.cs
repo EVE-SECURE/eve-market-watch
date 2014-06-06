@@ -138,7 +138,7 @@ namespace com.zanthra.emw
 
         private void listBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -188,14 +188,20 @@ namespace com.zanthra.emw
         private void btnImport_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.DefaultExt = "csv";
-            ofd.Filter = "EVE MarketWatch CSV Files (*.csv)|*.csv";
+            ofd.Filter = "EVE MarketWatch Transaction Files (*.csv;*.emw)|*.csv;*.emw";
 
             if (ofd.ShowDialog() == true)
             {
                 try
                 {
-                    _viewModel.Import(ofd.FileName);
+                    if (ofd.FileName.EndsWith(".emw"))
+                    {
+                        _viewModel.LoadTransactions(new System.IO.FileStream(ofd.FileName, System.IO.FileMode.Open));
+                    }
+                    else
+                    {
+                        _viewModel.Import(ofd.FileName);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -266,6 +272,64 @@ namespace com.zanthra.emw
         private void btnUpdatePrices_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.UpdatePrices();
+        }
+
+        private void miExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void miAutoSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.DefaultExt = "emw";
+            sfd.AddExtension = true;
+            sfd.Filter = "EVE Marketwatch Binary Transaction File (*.emw)|*.emw";
+
+            if(sfd.ShowDialog() == true && sfd.FileName != _viewModel.TransactionFilePath)
+            {
+                if(System.IO.File.Exists(sfd.FileName))
+                {
+                    if(MessageBox.Show("This file already exists, do you want to import the transactions first?", "Import Transactions", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        _viewModel.LoadTransactions(new System.IO.FileStream(sfd.FileName, System.IO.FileMode.Open));
+                    }
+                }
+                _viewModel.TransactionFilePath = sfd.FileName;
+            }
+        }
+
+        private void miSave_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Save();
+        }
+
+        private void miSaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.DefaultExt = "emw";
+            sfd.AddExtension = true;
+            sfd.Filter = "EVE Marketwatch Binary Transaction File (*.emw)|*.emw|EVE MarketWatch CVS File (*.cvs)|*.cvs";
+
+            if (sfd.ShowDialog() == true)
+            {
+                try
+                {
+                    if (sfd.FilterIndex == 1)
+                    {
+                        _viewModel.ExportItems(sfd.FileName);
+                    }
+                    else
+                    {
+                        _viewModel.SaveTransactions(new System.IO.FileStream(sfd.FileName, System.IO.FileMode.Create));
+                    }
+                    
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error saving transactions: {0}", ex.ToString());
+                }
+            }
         }
     }
 }
